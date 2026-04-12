@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+app/dist/
+app/dist-electron/
+app/release/
+
+# Logs and caches
+*.log
+npm-debug.log*
+.DS_Store
+app/node_modules/.tmp/
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo

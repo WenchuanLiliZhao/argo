@@ -1,0 +1,11 @@
+.app {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.app code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.95em;
+}
