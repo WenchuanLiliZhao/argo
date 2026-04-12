@@ -7,10 +7,16 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isDev =
   process.env.NODE_ENV === "development" || !app.isPackaged;
 
+/** Smallest size the user can resize the window to (CSS pixels). */
+const MIN_WIDTH = 800;
+const MIN_HEIGHT = 600;
+
 function createWindow(): void {
   const win = new BrowserWindow({
     width: 960,
     height: 640,
+    minWidth: MIN_WIDTH,
+    minHeight: MIN_HEIGHT,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
