@@ -17,10 +17,27 @@ function createWindow(): void {
     height: 640,
     minWidth: MIN_WIDTH,
     minHeight: MIN_HEIGHT,
+    /** Match the renderer so the chrome does not flash a different color on launch. */
+    backgroundColor: "#ffffff",
+    /**
+     * macOS: hide the separate title bar so the window looks like one surface (like many
+     * modern apps). Traffic lights stay in the top-left; the page must pad the top and
+     * expose a drag region — see `App.tsx` / `App.css`.
+     */
+    /**
+     * Use `hidden` (not `hiddenInset`) so renderer `app-region: drag` works reliably on
+     * macOS — `hiddenInset` reserves a native title strip that often breaks CSS drag.
+     */
+    ...(process.platform === "darwin" && {
+      titleBarStyle: "hidden",
+      trafficLightPosition: { x: 16, y: 14 },
+    }),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
+      /** Production: block DevTools and shortcuts (e.g. ⌘⌥I / ⌘⌥J / ⌘⌥C on macOS). */
+      devTools: isDev,
     },
   });
 

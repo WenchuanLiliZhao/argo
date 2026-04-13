@@ -1,8 +1,33 @@
+/**
+ * macOS `titleBarStyle: hidden`: draggable top bar. Use normal document flow (not
+ * `position: fixed`) — fixed layers interact badly with the system title strip.
+ * Standard `app-region` + webkit alias per Electron custom-title-bar tutorial.
+ */
+.electron-shell {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.electron-titlebar {
+  flex: 0 0 38px;
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 78px;
+  -webkit-app-region: drag;
+  app-region: drag;
+  /* Debug: visible drag strip — remove or neutralize after verifying window move */
+  /* background-color: rgb(220 38 38); */
+}
+
 .app {
   max-width: 42rem;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+  flex: 1 1 auto;
 }
 
 .app code {
