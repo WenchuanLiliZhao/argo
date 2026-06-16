@@ -11,6 +11,7 @@ app/release/
 npm-debug.log*
 .DS_Store
 app/node_modules/.tmp/
+app/.argo-dev/
 
 # Editor
 .idea/

@@ -1,11 +1,49 @@
+import { WorkspaceShell } from "./components/WorkspaceShell";
+import { WelcomeView } from "./components/WelcomeView";
+import { useWorkspaceSession } from "./hooks/useWorkspaceSession";
 import "./App.css";
 
 function App() {
+  const {
+    loading,
+    workspace,
+    restoreError,
+    actionError,
+    openWorkspace,
+    createWorkspace,
+    switchWorkspace,
+    clearActionError,
+    setIssueError,
+  } = useWorkspaceSession();
+
+  if (loading) {
+    return (
+      <main className="loading">
+        <p>Loading workspace…</p>
+      </main>
+    );
+  }
+
+  if (!workspace) {
+    return (
+      <WelcomeView
+        restoreError={restoreError}
+        actionError={actionError}
+        onOpenWorkspace={() => void openWorkspace()}
+        onCreateWorkspace={() => void createWorkspace()}
+        onDismissActionError={clearActionError}
+      />
+    );
+  }
+
   return (
-    <main className="app">
-      <h1>Argo</h1>
-      <p>Edit <code>src/App.tsx</code> and save to test HMR.</p>
-    </main>
+    <WorkspaceShell
+      workspace={workspace}
+      actionError={actionError}
+      onSwitchWorkspace={() => void switchWorkspace()}
+      onDismissActionError={clearActionError}
+      onIssueError={setIssueError}
+    />
   );
 }
 

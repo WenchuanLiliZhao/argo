@@ -1,11 +1,21 @@
 import { app, BrowserWindow } from "electron";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { registerIpcHandlers } from "./ipc/register-ipc.js";
+import { IssueStore } from "./services/issue-store.js";
+import { RecentWorkspaceStore } from "./services/recent-workspace-store.js";
+import { WorkspacePicker } from "./services/workspace-picker.js";
+import { WorkspaceService } from "./services/workspace-service.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const isDev =
   process.env.NODE_ENV === "development" || !app.isPackaged;
+
+const workspaceService = new WorkspaceService();
+const issueStore = new IssueStore(workspaceService);
+const recentWorkspaceStore = RecentWorkspaceStore.forUserData(app.getPath("userData"));
+const workspacePicker = new WorkspacePicker(workspaceService, recentWorkspaceStore);
 
 /** Smallest size the user can resize the window to (CSS pixels). */
 const MIN_WIDTH = 800;
@@ -33,6 +43,12 @@ function createWindow(): void {
 }
 
 void app.whenReady().then(() => {
+  registerIpcHandlers(
+    workspaceService,
+    issueStore,
+    workspacePicker,
+    recentWorkspaceStore,
+  );
   createWindow();
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {

@@ -12,9 +12,16 @@
     "build:electron": "node ./node_modules/typescript/bin/tsc -p tsconfig.electron.json && node ./node_modules/typescript/bin/tsc -p tsconfig.electron-preload.json",
     "build": "node ./node_modules/typescript/bin/tsc -b && node ./node_modules/vite/bin/vite.js build",
     "package:mac": "npm run build && npm run build:electron && node ./node_modules/electron-builder/cli.js --mac",
-    "preview": "node ./node_modules/vite/bin/vite.js preview"
+    "preview": "node ./node_modules/vite/bin/vite.js preview",
+    "test:phase01": "npm run build:electron && node dist-electron/scripts/verify-phase01.js",
+    "test:phase02": "npm run build:electron && node dist-electron/scripts/verify-phase02.js",
+    "test:phase03": "npm run build:electron && node dist-electron/scripts/verify-phase03.js",
+    "test:phase04": "npm run build:electron && node dist-electron/scripts/verify-phase04.js",
+    "test:phase05": "npm run build:electron && node dist-electron/scripts/verify-phase05.js",
+    "test:phase06": "npm run build:electron && node dist-electron/scripts/verify-phase06.js"
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "zod": "^4.4.3"
